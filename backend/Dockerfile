@@ -25,11 +25,14 @@ ENV PRISMA_BINARY_CACHE_DIR=/usr/lib/
 COPY ./pyproject.toml ./poetry.lock* /
 WORKDIR /
 RUN poetry run pip install --upgrade pip
-RUN poetry install --no-root --only main
+# Install main dependencies and the 'local' group which now contains Auto-GPT dependencies
+RUN poetry install --no-root --with local
 
-# Download plugin dependencies
+# Create directories for plugins and Auto-GPT source
 RUN mkdir ${PLUGINS_DIR}
-RUN mkdir /src
+RUN mkdir -p /src/autogpt # Ensure the target directory for mv exists and is /src/autogpt
+
+# Download plugin dependencies (these are separate from the main app)
 RUN curl -L -o ${PLUGINS_DIR}/Auto-GPT-Plugins.zip https://github.com/Significant-Gravitas/Auto-GPT-Plugins/archive/refs/heads/master.zip
 RUN curl -L -o ${PLUGINS_DIR}/AutoGPT_Slack.zip https://github.com/adithya77/Auto-GPT-slack-plugin/archive/refs/heads/main.zip
 RUN curl -L -o ${PLUGINS_DIR}/AutoGPT_YouTube.zip https://github.com/Yolley/AutoGPT-YouTube/archive/refs/heads/master.zip
@@ -37,18 +40,21 @@ RUN curl -L -o ${PLUGINS_DIR}/AutoGPT_YouTube.zip https://github.com/Yolley/Auto
 ARG AUTO_GPT_VERSION
 ENV AUTO_GPT_VERSION ${AUTO_GPT_VERSION}
 
-# Download and install the core Auto-GPT engine
+# Download Auto-GPT engine source and install plugin dependencies
 RUN curl -L -o auto_gpt.zip https://github.com/Significant-Gravitas/Auto-GPT/archive/refs/tags/v${AUTO_GPT_VERSION}.zip \
     && unzip auto_gpt.zip \
     && cd "AutoGPT-${AUTO_GPT_VERSION}" \
-    && mv autogpt /src/ \
-    && pip install -r requirements.txt \
-    && python scripts/check_requirements.py requirements.txt \
-    # This is the final fix: find all plugin requirements and remove the "typing" package before installing
-    && find /plugins -name "requirements.txt" -type f -exec sed -i '/^typing/d' {} + \
+    # Move the 'autogpt' source code into the /src directory for the application
+    && mv autogpt /src/autogpt \
+    # Install plugin dependencies using the script from Auto-GPT source
+    # This uses the Python environment set up by Poetry.
+    # First, remove 'typing' from any plugin requirements.txt as it conflicts with Python 3.11+
+    && find ${PLUGINS_DIR} -name "requirements.txt" -type f -exec sed -i '/^typing/d' {} + \
+    # Then run the plugin installation script
     && python scripts/install_plugin_deps.py
 
-# Copy remaining application files
+# Copy UI backend application files
+# Note: Auto-GPT source is already in /src/autogpt from the step above
 COPY ./src/ /src/
 COPY ./migrations /migrations
 COPY ./prisma_partial /prisma_partial

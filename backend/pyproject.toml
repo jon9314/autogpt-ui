@@ -49,63 +49,66 @@ pytest-mock = "^3.10.0"
 
 
 [tool.poetry.group.local.dependencies]
-agpt = {url = "https://github.com/Significant-Gravitas/Auto-GPT/archive/refs/tags/v0.4.4.zip"}
+# Dependencies from Auto-GPT v0.4.4 requirements.txt
 beautifulsoup4 = ">=4.12.2"
-colorama = "0.4.6"
-distro = "1.8.0"
-openai = "0.27.2"
-playsound = "1.2.2"
-python-dotenv = "1.0.0"
-pyyaml = "6.0"
-pypdf2 = "^3.0.1"
-python-docx = "^0.8.11"
-markdown = "^3.4.3"
-pylatexenc = "^2.10"
-readability-lxml = "0.8.1"
-requests = "^2.31.0"
-tiktoken = "0.3.3"
-gtts = "2.3.1"
-docker = "^6.1.3"
-duckduckgo-search = "3.0.2"
-google-api-python-client = "^2.88.0"
-pinecone-client = "2.2.1"
-redis = "^4.5.5"
-orjson = "3.8.10"
-pillow = "^9.5.0"
-selenium = "4.1.4"
-webdriver-manager = "^3.8.6"
-jsonschema = "^4.17.3"
-click = "^8.1.3"
-charset-normalizer = ">=3.1.0"
-spacy = ">=3.0.0,<4.0.0"
-openapi-python-client = "0.13.4"
+colorama = "0.4.6" # Auto-GPT requirements.txt: ==0.4.6
+distro = "1.8.0" # Auto-GPT requirements.txt: ==1.8.0
+openai = "0.27.2" # Auto-GPT requirements.txt: ==0.27.2
+playsound = "1.2.2" # Auto-GPT requirements.txt: ==1.2.2
+python-dotenv = "1.0.0" # Auto-GPT requirements.txt: ==1.0.0
+# pyyaml is in main dependencies as ^6.0, Auto-GPT has ==6.0
+pypdf2 = "^3.0.1" # Auto-GPT requirements.txt: PyPDF2 (no version)
+python-docx = "^0.8.11" # Auto-GPT requirements.txt: python-docx (no version)
+markdown = "^3.4.3" # Auto-GPT requirements.txt: markdown (no version)
+pylatexenc = "^2.10" # Auto-GPT requirements.txt: pylatexenc (no version)
+readability-lxml = "0.8.1" # Auto-GPT requirements.txt: ==0.8.1
+requests = "^2.31.0" # Auto-GPT requirements.txt: requests (no version)
+tiktoken = "0.3.3" # Auto-GPT requirements.txt: ==0.3.3
+gtts = "2.3.1" # Auto-GPT requirements.txt: ==2.3.1
+docker = "^6.1.3" # Auto-GPT requirements.txt: docker (no version)
+duckduckgo-search = "3.0.2" # Auto-GPT requirements.txt: ==3.0.2
+google-api-python-client = "^2.88.0" # Auto-GPT requirements.txt: google-api-python-client (no version)
+pinecone-client = "2.2.1" # Auto-GPT requirements.txt: ==2.2.1
+redis = "^4.5.5" # Auto-GPT requirements.txt: redis (no version)
+orjson = "3.8.10" # Auto-GPT requirements.txt: ==3.8.10
+pillow = "^9.5.0" # Auto-GPT requirements.txt: Pillow (no version)
+selenium = "4.1.4" # Auto-GPT requirements.txt: ==4.1.4
+webdriver-manager = "^3.8.6" # Auto-GPT requirements.txt: webdriver-manager (no version)
+jsonschema = "^4.17.3" # Auto-GPT requirements.txt: jsonschema (no version)
+click = "^8.1.3" # Auto-GPT requirements.txt: click (no version)
+charset-normalizer = ">=3.1.0" # Auto-GPT requirements.txt: >=3.1.0
+spacy = ">=3.0.0,<4.0.0" # Auto-GPT requirements.txt: >=3.0.0,<4.0.0
+openapi-python-client = "0.13.4" # Auto-GPT requirements.txt: ==0.13.4
 en-core-web-sm = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.5.0/en_core_web_sm-3.5.0-py3-none-any.whl"}
-auto-gpt-plugin-template = {git = "https://github.com/Significant-Gravitas/Auto-GPT-Plugin-Template", rev = "0.1.0"}
-prompt-toolkit = ">=3.0.38"
+auto-gpt-plugin-template = {git = "https://github.com/Significant-Gravitas/Auto-GPT-Plugin-Template", rev = "0.1.0"} # Auto-GPT requirements.txt: auto-gpt-plugin-template @ git+...
+prompt-toolkit = ">=3.0.38" # Auto-GPT requirements.txt: >=3.0.38
+# numpy is listed under #Dev in Auto-GPT requirements.txt, keeping current version
 numpy = "^1.25.0"
-inflection = "^0.5.1"
-gitpython = "^3.1.31"
-abstract-singleton = "^1.0.1"
-atproto = "^0.0.17"
-black = "^23.7.0"
-bs4 = "^0.0.1"
-build = "^0.10.0"
-flake8 = "^6.0.0"
-isort = "^5.12.0"
-newsapi-python = "^0.2.7"
-pandas = "^2.0.3"
-pylint = "^2.17.4"
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-python-lorem = "^1.3.0.post1"
-python-telegram-bot = "^20.4"
-requests-mock = "^1.11.0"
-setuptools = "^68.0.0"
-tweepy = "4.13.0"
-twine = "^4.0.2"
-validators = "^0.20.0"
-wheel = "^0.40.0"
-wolframalpha = "5.0.0"
+inflection = "^0.5.1" # Auto-GPT requirements.txt: inflection (no version)
+gitpython = "^3.1.31" # Auto-GPT requirements.txt: ==3.1.31
+
+# Dev/build tools that were in the original local group - some are in Auto-GPT's dev requirements
+# Keeping them for now to minimize disruption, can be pruned later if they cause issues or are not needed.
+abstract-singleton = "^1.0.1" # Not in Auto-GPT requirements.txt
+atproto = "^0.0.17" # Not in Auto-GPT requirements.txt
+black = "^23.7.0" # Also in dev group. Auto-GPT has black in dev.
+bs4 = "^0.0.1" # beautifulsoup4 is the actual package, bs4 is a wrapper. Keeping for now.
+build = "^0.10.0" # Auto-GPT has build in dev.
+flake8 = "^6.0.0" # Also in dev group. Auto-GPT has flake8 in dev.
+isort = "^5.12.0" # Also in dev group. Auto-GPT has isort in dev.
+newsapi-python = "^0.2.7" # Not in Auto-GPT requirements.txt
+pandas = "^2.0.3" # Not in Auto-GPT requirements.txt
+pylint = "^2.17.4" # Not in Auto-GPT requirements.txt
+python-lorem = "^1.3.0.post1" # Not in Auto-GPT requirements.txt
+python-telegram-bot = "^20.4" # Not in Auto-GPT requirements.txt
+requests-mock = "^1.11.0" # Not in Auto-GPT requirements.txt
+setuptools = "^68.0.0" # Build system related.
+tweepy = "4.13.0" # Not in Auto-GPT requirements.txt
+twine = "^4.0.2" # Not in Auto-GPT requirements.txt
+validators = "^0.20.0" # Not in Auto-GPT requirements.txt
+wheel = "^0.40.0" # Build system related.
+wolframalpha = "5.0.0" # Not in Auto-GPT requirements.txt
+
 
 [tool.isort]
 multi_line_output = 3
